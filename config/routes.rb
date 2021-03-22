@@ -11,13 +11,14 @@ Rails.application.routes.draw do
   get 'pages/quote'# => 'application#quotes'
   #post 'create' => 'application#create'
   resources :quotes
-  # authenticate :user, lamdba {|u| u.role == "admin"} do
-  #   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  # end
+  
+  
   resources :leads
   post '/leads', to: 'leads#create'
-
+  
+  get 'pages/intervention'
   get 'dropbox/auth_callback' => 'dropbox#auth_callback'
+
 
 end
 
