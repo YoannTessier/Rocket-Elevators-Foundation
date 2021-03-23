@@ -8,17 +8,14 @@ Rails.application.routes.draw do
   root 'pages#index'
   get 'pages/commercial'
   get 'pages/residential'
-  get 'pages/quote'# => 'application#quotes'
+  get 'pages/quote'
   get '/interventions' => 'intervention#intervention'
-  #post 'create' => 'application#create'
-  resources :quotes
-  
-  
-  resources :leads
-  post '/leads', to: 'leads#create'
-  
+  get '/buildings' => 'buildings#findBuildings'
+  post '/leads', to: 'leads#create'  
   get 'dropbox/auth_callback' => 'dropbox#auth_callback'
 
+  resources :quotes
+  resources :leads
 
 end
 

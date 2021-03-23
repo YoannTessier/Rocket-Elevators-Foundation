@@ -117,7 +117,7 @@ end
     }])
 end
 
-100.times do 
+300.times do 
     Building.create!([{
         "full_name_administrator" => Faker::Name.unique.name,
         "address_building" => Faker::Name.building_address,
@@ -126,7 +126,7 @@ end
         "full_name_technical_contact_building" => Faker::Name.unique.name ,  
         "technical_contact_building_email" => Faker::Internet.email,
         "technical_contact_building_phone" => Faker::PhoneNumber.cell_phone,
-        "customer_id" => Faker::Number.unique.between(from: 1, to:100)
+        "customer_id" => Faker::Number.between(from: 1, to:100)
     }])
 end
 
