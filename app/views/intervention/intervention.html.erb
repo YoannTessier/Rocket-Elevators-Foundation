@@ -16,7 +16,7 @@
                 </div>
                 <div>
                     <%= f.label "Building ID" %>
-                    <%= f.select :buildings_id, {}, :id => "building-id" %>
+                    <%= f.select :buildings_id, "test", {}, :id => "building-id" %>
                 </div>
             <%end%>
         </div>
@@ -25,7 +25,8 @@
 
 
 <script>
-    function ajax(){
+
+function ajax(){
         var customerSelection = $('#customer-id');
         var customerId = customerSelection.val();
         console.log("customer ID: ", customerId);
@@ -40,15 +41,16 @@
             },
             success: function (response) {
                 console.log(response);
-                var buildingList  = response["buildings"];
-                $("building-id").empty();
+                var buildingList  = response;
+                $("#building-id").empty();
 
-                $("building-id").append('<option>Select</option>');
-                for(var i = 0; i < buildingList.length; i++){
-                    $("building-id").append('<option value="' + buildingList['buildings'][i] + '">' + buildingList['buildings'][i] + '</option>');
+                $("#building-id").append('<option value="' + " " + '">' + " " + '</option>');
+                for(var i = 0; i < buildingList['buildings'].length; i++){
+                    $("#building-id").append('<option value="' + buildingList['buildings'][i] + '">' + buildingList['buildings'][i] + '</option>');
                 }
            }
         })
                     console.log("hello")
     };
+    
 </script>
