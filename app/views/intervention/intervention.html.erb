@@ -1,4 +1,5 @@
-<!-- WRAPPER -->
+
+        <!-- WRAPPER -->
 		<div id="wrapper">
 
 			<div id="header" class="navbar-toggleable-md sticky header-md clearfix">
@@ -42,7 +43,7 @@
                             </li>
                             <% if user_signed_in? && current_user.supervisor_role? %>
 								<li><!--Intervention -->
-									<%= link_to "INTERVENTION", pages_intervention_url%>
+									<%= link_to "INTERVENTION", interventions_url%>
 								</li>
 								<li><!-- ADMIN -->
 									<%= link_to "ADMIN", rails_admin_url %>
@@ -66,4 +67,32 @@
             </div>
         </header>
         <!-- /Top Nav -->
+
 			</div>
+        <section> 
+         <div class="container">
+                    <div id="steps-to-quote" class="heading-title heading-dotted text-center">
+						<h2>Create an Intervention</h2>
+                    </div>
+
+
+            <div class="container form">
+                <%= form_for(Intervention.new) do |f| %>
+                    <%= f.label :customers_id %>
+                    <%= f.select :customers_id, Customer.all.collect { |c| [c.company_name] }, include_blank: true %>
+                    <%= f.label :customers_id %>
+                    <%= f.select :customers_id, Customer.all.collect { |c| [c.company_name] }, include_blank: true %>
+                <%end%>
+            
+
+            <select class="form-control" name="hour[project_id]" id="hour_project_id">
+                <option value="">Select</option>
+                <option value="1">Real Estate</option>
+                <option value="2">Time Sheet App</option>
+            </select>
+
+            <select class="form-control" name="hour[task_id]" id="hour_task_id" disabled="">
+                <option value="3">Developer</option>
+                <option value="4">Design</option>
+                <option value="6">Backend</option>
+            </select>

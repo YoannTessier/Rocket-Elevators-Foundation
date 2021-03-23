@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'pages/commercial'
   get 'pages/residential'
   get 'pages/quote'# => 'application#quotes'
+  get '/interventions' => 'intervention#intervention'
   #post 'create' => 'application#create'
   resources :quotes
   
@@ -16,7 +17,6 @@ Rails.application.routes.draw do
   resources :leads
   post '/leads', to: 'leads#create'
   
-  get 'pages/intervention'
   get 'dropbox/auth_callback' => 'dropbox#auth_callback'
 
 

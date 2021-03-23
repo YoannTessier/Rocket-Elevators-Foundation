@@ -44,7 +44,7 @@
                             </li>
 							<% if user_signed_in? && current_user.supervisor_role? %>
 								<li><!--Intervention -->
-									<%= link_to "INTERVENTION", pages_intervention_url%>
+									<%= link_to "INTERVENTION", interventions_url%>
 								</li>
 								<li><!-- ADMIN -->
 									<%= link_to "ADMIN", rails_admin_url %>
