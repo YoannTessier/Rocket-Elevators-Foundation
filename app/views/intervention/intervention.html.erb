@@ -9,37 +9,37 @@
 
     <!-- FORM -->
         <div class="container form">
-            <%= form_with(model: @intervention) do |f| %>
+            <%= form_with url:"/interventions", local: true do |f| %>
                 <div id="customer" class="col-md-4">
                     <%= f.label "Customer" %>
-                    <%= f.select :customers_id, getCustomers, {}, :onchange=>"updateAjax('customer');" %>
+                    <%= f.select :customer_id, getCustomers, {}, :onchange=>"updateAjax('customer');" %>
                 </div>
                 <div id="building" class="col-md-4">
                     <%= f.label "Building" %>
-                    <%= f.select :buildings_id, Building.all, {},  :onchange => "updateAjax('building');" %>
+                    <%= f.select :building_id, Building.all, {},  :onchange => "updateAjax('building');" %>
                 </div>
                 <div id="battery" class="col-md-4">
                     <%= f.label "Battery" %>
-                    <%= f.select :batteries_id, Battery.all, {}, :onchange => "updateAjax('battery');" %>
+                    <%= f.select :battery_id, Battery.all, {}, :onchange => "updateAjax('battery');" %>
                 </div>
                 <div id="column" class="col-md-4">
                     <%= f.label "Column" %>
-                    <%= f.select :columns_id, Battery.all, {}, :onchange => "updateAjax('column');" %>
+                    <%= f.select :column_id, Battery.all, {}, :onchange => "updateAjax('column');" %>
                 </div>
                 <div id="elevator" class="col-md-4">
                     <%= f.label "Elevator" %>
-                    <%= f.select :elevators_id, Column.all, {}, :onchange => "updateAjax('elevator');" %>
+                    <%= f.select :elevator_id, Column.all, {} %>
                 </div>
                  <div id="employee" class="col-md-4">
                     <%= f.label "Employee" %>
-                    <%= f.select :employees_id, getEmployees, {}, :onchange => "updateAjax('elevator');" %>
+                    <%= f.select :employee_id, getEmployees, {} %>
                 </div> 
                 <div id="description" class="col-md-8">
                     <%= f.label "Description" %>
-                    <%= f.text_area :description %>
+                    <%= f.text_area :description, :cols => 54, :rows => 6 %>
                 </div>
                 <div id="submit" class="col-md-8">
-                    <%= f.submit %>
+                    <%= f.submit "SUBMIT", class: "btn btn-primary" %>
                 </div>
             <%end%>
         </div>
@@ -53,15 +53,15 @@
     })
 
     function updateAjax(object){
-        let customerField = $("#customers_id");
-        let customer = $("#customers_id").val();
-        let buildingField = $("#buildings_id");
-        let building = $("#buildings_id").val();
-        let batteryField = $("#batteries_id");
-        let battery = $("#batteries_id").val();
-        let columnField = $("#columns_id");
-        let column = $("#columns_id").val()
-        let elevatorField = $("#elevators_id");
+        let customerField = $("#customer_id");
+        let customer = $("#customer_id").val();
+        let buildingField = $("#building_id");
+        let building = $("#building_id").val();
+        let batteryField = $("#battery_id");
+        let battery = $("#battery_id").val();
+        let columnField = $("#column_id");
+        let column = $("#column_id").val()
+        let elevatorField = $("#elevator_id");
 
         let _url;
         let _dictionary;
@@ -73,7 +73,7 @@
                 _url = "/find_buildings";
                 _dictionary = {customer_id: customer};
                 _key = "buildings";
-                _objectId = "#buildings_id"
+                _objectId = "#building_id"
 
                 $("#building, #battery, #column, #elevator").hide();
 
@@ -82,19 +82,19 @@
                 _url = "/find_batteries";
                 _dictionary = {building_id: building};
                 _key = "batteries";
-                _objectId = "#batteries_id";
+                _objectId = "#battery_id";
                 break;
             case "battery":
                 _url = "/find_columns";
                 _dictionary = {battery_id: battery};
                 _key = "columns";
-                _objectId = "#columns_id";
+                _objectId = "#column_id";
                 break;
             case "column":
                 _url = "/find_elevators";
                 _dictionary = {column_id: column};
                 _key = "elevators";
-                _objectId = "#elevators_id";
+                _objectId = "#elevator_id";
                 break;
         }
         $.ajax({
@@ -115,15 +115,24 @@
     }
              
     function updateFields(_objectId) {      
-      if (_objectId == "#columns_id" || _objectId == "#elevators_id") {
+        if (_objectId == "#column_id" || _objectId == "#elevator_id") {
         $(_objectId).append('<option selected="None"  value="null">None</option>');
-      }
-      else {
+        }
+        else {
         $(_objectId).append('<option selected="selected" disabled="disabled" value="null">Select</option>');
-      }
+        }
 
-        for(let i = 0; i < objectList.length; i++){
-            $(_objectId).append("<option value=" + objectList[i] + ">" + objectList[i] + "</option>");
+        if (_objectId == "#building_id"){
+            
+            for(let i = 0; i < objectList.length; i++){
+            $(_objectId).append("<option value=" + objectList[i][0] + ">" + objectList[i][1] + "</option>");
+            }
+
+        }else{
+
+            for(let i = 0; i < objectList.length; i++){
+                $(_objectId).append("<option value=" + objectList[i] + ">" + objectList[i] + "</option>");
+            }
         }
     }
 
@@ -131,25 +140,25 @@
         if (object == ('customer')){
 
             $("#building").show();
-            $("#buildings_id, #batteries_id, #columns_id, #elevators_id").empty();
+            $("#building_id, #battery_id, #column_id, #elevator_id").empty();
             $("#battery, #column, #elevator").hide();
 
         }else if (object == ('building')){
 
             $("#building, #battery").show();
-            $("#batteries_id, #columns_id, #elevators_id").empty();
+            $("#battery_id, #column_id, #elevator_id").empty();
             $("#column, #elevator").hide();
             
         }else if (object == ('battery')){
 
             $("#building, #battery, #column").show();
-            $("#columns_id, #elevators_id").empty();
+            $("#column_id, #elevator_id").empty();
             $("#elevator").hide();
 
         }else if (object == ('column')){
 
             $("#building, #battery, #column, #elevator").show();
-            $("#elevators_id").empty();
+            $("#elevator_id").empty();
         }
     };
 </script>

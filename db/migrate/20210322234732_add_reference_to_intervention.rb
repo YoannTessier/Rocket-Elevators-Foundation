@@ -1,10 +1,10 @@
 class AddReferenceToIntervention < ActiveRecord::Migration[5.2]
   def change
-    add_reference :interventions, :customers, foreign_key: true
-    add_reference :interventions, :buildings, foreign_key: true
-    add_reference :interventions, :batteries, foreign_key: true
-    add_reference :interventions, :columns, foreign_key: true
-    add_reference :interventions, :elevators, foreign_key: true
-    add_reference :interventions, :employees, foreign_key: true
+    add_reference :interventions, :customer, foreign_key: true
+    add_reference :interventions, :building, foreign_key: true
+    add_reference :interventions, :battery, foreign_key: true
+    add_reference :interventions, :column, foreign_key: true
+    add_reference :interventions, :elevator, foreign_key: true
+    add_reference :interventions, :employee, foreign_key: true
   end
 end
