@@ -1,13 +1,7 @@
 class InterventionController < ApplicationController
-  def intervention
-  end
 
-  def selectCustomers
-    @customerSelection = Array.new
-    Customer.all.each do |c|
-      @customerSelection.append([c.company_name, c.id])
-    end
-    return @customerSelection
+  def update_buildings
+    @buildingList = Building.where(customer_id: params[:customer_id])
+    render json: {buildings: @buildingList}
   end
-  helper_method :selectCustomers
 end

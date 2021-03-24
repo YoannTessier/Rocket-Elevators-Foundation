@@ -9,14 +9,14 @@
 
     <!-- FORM -->
         <div class="container form">
-            <%= form_for(Intervention.new) do |f| %>
-                <div>
+            <%= form_with(model: @intervention) do |f| %>
+                <div id="customer" class="col-md-4">
                     <%= f.label "Customer" %>
-                    <%= f.select :customers_id, selectCustomers, {}, :id => "customer-id", :onchange => 'ajax();' %>
+                    <%= f.collection_select :customers_id, Customer.all, :id, :company_name, include_blank: true %>
                 </div>
-                <div>
-                    <%= f.label "Building ID" %>
-                    <%= f.select :buildings_id, "test", {}, :id => "building-id" %>
+                <div id="building" class="col-md-4">
+                    <%= f.label "Building" %>
+                    <%= f.collection_select :buildings_id, Building.all, :id, :id, include_blank: true %>
                 </div>
             <%end%>
         </div>
@@ -26,31 +26,29 @@
 
 <script>
 
-function ajax(){
-        var customerSelection = $('#customer-id');
-        var customerId = customerSelection.val();
-        console.log("customer ID: ", customerId);
+    $("#customers_id").change(function(){
+        let customer = $(this).val();
 
         $.ajax({
-            url: "/buildings",
+            url: "/update_buildings",
             method: "GET",  
             dataType: "json",
-            data: {customer_id: customerId},
+            data: {customer_id: customer},
             error: function (xhr, status, error) {
                 console.error('AJAX Error: ' + status + error);
             },
             success: function (response) {
                 console.log(response);
-                var buildingList  = response;
-                $("#building-id").empty();
+                let buildingList  = response;
+                $("#buildings_id").empty();
 
-                $("#building-id").append('<option value="' + " " + '">' + " " + '</option>');
-                for(var i = 0; i < buildingList['buildings'].length; i++){
-                    $("#building-id").append('<option value="' + buildingList['buildings'][i] + '">' + buildingList['buildings'][i] + '</option>');
+                $("#buildings_id").append("<option> --- SELECT --- </option>");
+                for(let i = 0; i < buildingList['buildings'].length; i++){
+                    $("#buildings_id").append("<option value=" + buildingList['buildings'][i].id + ">" + buildingList['buildings'][i].address_building + "</option>");
                 }
            }
         })
-                    console.log("hello")
-    };
-    
+                console.log("hello")
+    });
+
 </script>
