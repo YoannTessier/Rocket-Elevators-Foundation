@@ -12,25 +12,24 @@
             <%= form_with(model: @intervention) do |f| %>
                 <div id="customer" class="col-md-4">
                     <%= f.label "Customer" %>
-                    <%= f.collection_select :customers_id, Customer.all, :id, :company_name, include_blank: true, :onchange => "updateAjax(customer);" %>
+                    <%= f.select :customers_id, getCustomers, {}, :onchange=>"updateAjax('customer');" %>
                 </div>
                 <div id="building" class="col-md-4">
                     <%= f.label "Building" %>
-                    <%= f.collection_select :buildings_id, Building.all, :id, :id, include_blank: true, :onchange => "updateAjax(building);" %>
+                    <%= f.select :buildings_id, Building.all, {},  :onchange => "updateAjax('building');" %>
                 </div>
                 <div id="battery" class="col-md-4">
                     <%= f.label "Battery" %>
-                    <%= f.collection_select :batteries_id, Battery.all, :id, :id, include_blank: true, :onchange => "updateAjax(battery);" %>
+                    <%= f.select :batteries_id, Battery.all, {}, :onchange => "updateAjax('battery');" %>
                 </div>
                 <div id="column" class="col-md-4">
                     <%= f.label "Column" %>
-                    <%= f.collection_select :columns_id, Column.all, :id, :id, include_blank: true, :onchange => "updateAjax(column);" %>
+                    <%= f.select :columns_id, Battery.all, {}, :onchange => "updateAjax('column');" %>
                 </div>
                 <div id="elevator" class="col-md-4">
                     <%= f.label "Elevator" %>
-                    <%= f.collection_select :elevators_id, Elevator.all, :id, :id, include_blank: true, :onchange => "updateAjax(elevator);" %>
-                </div>
-
+                    <%= f.select :elevators_id, Column.all, {}, :onchange => "updateAjax('elevator');" %>
+                </div> 
             <%end%>
         </div>
 </section>
@@ -39,8 +38,15 @@
 
 <script>
 
+    $(window).on('load', function() {
+        $("#building").hide();
+        $("#battery").hide();
+        $("#column").hide();
+        $("#elevator").hide();
+
+    })
+
     function updateAjax(object){
-        console.log("YOOOOOOOO")
         let customerField = $("#customers_id");
         let customer = $("#customers_id").val();
         let buildingField = $("#buildings_id");
@@ -100,11 +106,18 @@
              
     function updateFields(_objectId) {      
         $(_objectId).empty();
-        $(_objectId).append("<option> --- SELECT --- </option>");
+        $(_objectId).append('<option selected="selected" disabled="disabled" value="Select">Select</option>');
 
         for(let i = 0; i < objectList.length; i++){
             $(_objectId).append("<option value=" + objectList[i] + ">" + objectList[i] + "</option>");
         }
-    };
+    }
+
+    // function showFields(_objectId) {
+    //     if (_objectId == ("#customers_id")){
+    //         $("#buildings_id).show()
+
+    //     }
+    // }
 
 </script>
