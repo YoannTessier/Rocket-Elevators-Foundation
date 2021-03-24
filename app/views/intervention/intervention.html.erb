@@ -12,12 +12,25 @@
             <%= form_with(model: @intervention) do |f| %>
                 <div id="customer" class="col-md-4">
                     <%= f.label "Customer" %>
-                    <%= f.collection_select :customers_id, Customer.all, :id, :company_name, include_blank: true %>
+                    <%= f.collection_select :customers_id, Customer.all, :id, :company_name, include_blank: true, :onchange => "updateAjax(customer);" %>
                 </div>
                 <div id="building" class="col-md-4">
                     <%= f.label "Building" %>
-                    <%= f.collection_select :buildings_id, Building.all, :id, :id, include_blank: true %>
+                    <%= f.collection_select :buildings_id, Building.all, :id, :id, include_blank: true, :onchange => "updateAjax(building);" %>
                 </div>
+                <div id="battery" class="col-md-4">
+                    <%= f.label "Battery" %>
+                    <%= f.collection_select :batteries_id, Battery.all, :id, :id, include_blank: true, :onchange => "updateAjax(battery);" %>
+                </div>
+                <div id="column" class="col-md-4">
+                    <%= f.label "Column" %>
+                    <%= f.collection_select :columns_id, Column.all, :id, :id, include_blank: true, :onchange => "updateAjax(column);" %>
+                </div>
+                <div id="elevator" class="col-md-4">
+                    <%= f.label "Elevator" %>
+                    <%= f.collection_select :elevators_id, Elevator.all, :id, :id, include_blank: true, :onchange => "updateAjax(elevator);" %>
+                </div>
+
             <%end%>
         </div>
 </section>
@@ -26,29 +39,71 @@
 
 <script>
 
-    $("#customers_id").change(function(){
-        let customer = $(this).val();
+    function updateAjax(object){
+        let customerField = $("#customers_id");
+        let customer = $("#customers_id").val();
+        let buildingField = $("#buildings_id");
+        let building = $("#buildings_id").val();
+        let batteryField = $("#batteries_id");
+        let battery = $("#batteries_id").val();
+        let columnField = $("#columns_id");
+        let column = $("#columns_id").val()
+        let elevatorField = $("#elevators_id");
 
+        let _url;
+        let _dictionary;
+        let _key;
+        let _objectId;
+
+        switch(object) {
+            case "customer":
+                _url = "/find_buildings";
+                _dictionary = {customer_id: customer};
+                _key = "buildings";
+                _objectId = "#buildings_id"
+                break;
+            case "building":
+                _url = "/find_batteries";
+                _dictionary = {building_id: building};
+                _key = "batteries";
+                _objectId = "#batteries_id";
+                break;
+            case "battery":
+                _url = "/find_columns";
+                _dictionary = {battery_id: battery};
+                _key = "columns";
+                _objectId = "#columns_id";
+                break;
+            case "column":
+                _url = "/find_elevators";
+                _dictionary = {column_id: column};
+                _key = "elevators";
+                _objectId = "#elevators_id";
+                break;
+        }
         $.ajax({
-            url: "/update_buildings",
+            url: _url,
             method: "GET",  
             dataType: "json",
-            data: {customer_id: customer},
+            data: _dictionary,
             error: function (xhr, status, error) {
                 console.error('AJAX Error: ' + status + error);
             },
             success: function (response) {
                 console.log(response);
-                let buildingList  = response;
-                $("#buildings_id").empty();
-
-                $("#buildings_id").append("<option> --- SELECT --- </option>");
-                for(let i = 0; i < buildingList['buildings'].length; i++){
-                    $("#buildings_id").append("<option value=" + buildingList['buildings'][i].id + ">" + buildingList['buildings'][i].address_building + "</option>");
-                }
-           }
+                objectList  = response[_key];
+                updateFields(_objectId);
+            }
         })
-                console.log("hello")
-    });
+    }
+             
+    function updateFields(_objectId) {      
+        $(_objectId).empty();
+        $(_objectId).append("<option> --- SELECT --- </option>");
+
+        for(let i = 0; i < objectList.length; i++){
+            $(_objectId).append("<option value=" + objectList[i] + ">" + objectList[i] + "</option>");
+        }
+    };
 
 </script>

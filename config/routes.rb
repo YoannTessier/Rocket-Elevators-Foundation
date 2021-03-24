@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   get 'pages/residential'
   get 'pages/quote'
   get '/interventions' => 'intervention#intervention'
-  get 'update_buildings' => 'intervention#update_buildings'
+  get 'find_buildings' => 'intervention#find_buildings'
+  get 'find_batteries' => 'intervention#find_batteries'
+  get 'find_columns' => 'intervention#find_columns'
+  get 'find_elevators' => 'intervention#find_elevators'
   post '/leads', to: 'leads#create'  
   get 'dropbox/auth_callback' => 'dropbox#auth_callback'
 
