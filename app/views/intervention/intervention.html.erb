@@ -12,15 +12,15 @@
             <%= form_with url:"/interventions", local: true do |f| %>
                 <div id="customer" class="col-md-4">
                     <%= f.label "Customer" %>
-                    <%= f.select :customer_id, getCustomers, {}, :onchange=>"updateAjax('customer');" %>
+                    <%= f.select :customer_id, getCustomers, {:include_blank => "-- Select --"}, :required => true, :onchange=>"updateAjax('customer');" %>
                 </div>
                 <div id="building" class="col-md-4">
                     <%= f.label "Building" %>
-                    <%= f.select :building_id, Building.all, {},  :onchange => "updateAjax('building');" %>
+                    <%= f.select :building_id, Building.all, {:include_blank => "-- Select --"}, :required => true,  :onchange => "updateAjax('building');" %>
                 </div>
                 <div id="battery" class="col-md-4">
                     <%= f.label "Battery" %>
-                    <%= f.select :battery_id, Battery.all, {}, :onchange => "updateAjax('battery');" %>
+                    <%= f.select :battery_id, Battery.all, {:include_blank => "-- Select --"}, :required => true, :onchange => "updateAjax('battery');" %>
                 </div>
                 <div id="column" class="col-md-4">
                     <%= f.label "Column" %>
@@ -116,16 +116,16 @@
              
     function updateFields(_objectId) {      
         if (_objectId == "#column_id" || _objectId == "#elevator_id") {
-        $(_objectId).append('<option selected="None"  value="null">None</option>');
+        $(_objectId).append('<option selected="None"  value>None</option>');
         }
         else {
-        $(_objectId).append('<option selected="selected" disabled="disabled" value="null">Select</option>');
+        $(_objectId).append('<option selected="selected" disabled="disabled" value> --Select-- </option>');
         }
 
         if (_objectId == "#building_id"){
             
             for(let i = 0; i < objectList.length; i++){
-            $(_objectId).append("<option value=" + objectList[i][0] + ">" + objectList[i][1] + "</option>");
+                $(_objectId).append("<option value=" + objectList[i][0] + ">" + objectList[i][1] + "</option>");
             }
 
         }else{
