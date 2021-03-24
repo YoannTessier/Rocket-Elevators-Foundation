@@ -8,6 +8,14 @@ class InterventionController < ApplicationController
     return @customers
   end
 
+  def getEmployees
+    @employees = []
+    Employee.all.each do |e|
+      @employees.append([e.last_name, e.id])
+    end
+    return @employees
+  end
+
   def find_buildings
     @buildingList = []
     Building.where(customer_id: params[:customer_id]).each do |b|
@@ -40,5 +48,21 @@ class InterventionController < ApplicationController
     render json: {elevators: @elevatorList}
   end
 
+  def create_intervention
+        
+    interventions = Intervention.new
+    interventions.author = current_user.id
+    interventions.customers_id = params[:customers_id]
+    interventions.buildings_id = params[:buildings_id]
+    interventions.batteries_id = params[:batteries_id]
+    interventions.columns_id = params[:columns_id]
+    interventions.elevators_id = params[:elevators_id]
+    interventions.employees_id = params[:employees_id]
+    interventions.report = params[:description]
+
+    interventions.save!
+  end
+
   helper_method :getCustomers
+  helper_method :getEmployees
 end

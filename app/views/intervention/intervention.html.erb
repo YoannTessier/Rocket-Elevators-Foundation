@@ -29,7 +29,18 @@
                 <div id="elevator" class="col-md-4">
                     <%= f.label "Elevator" %>
                     <%= f.select :elevators_id, Column.all, {}, :onchange => "updateAjax('elevator');" %>
+                </div>
+                 <div id="employee" class="col-md-4">
+                    <%= f.label "Employee" %>
+                    <%= f.select :employees_id, getEmployees, {}, :onchange => "updateAjax('elevator');" %>
                 </div> 
+                <div id="description" class="col-md-8">
+                    <%= f.label "Description" %>
+                    <%= f.text_area :description %>
+                </div>
+                <div id="submit" class="col-md-8">
+                    <%= f.submit %>
+                </div>
             <%end%>
         </div>
 </section>
@@ -37,13 +48,8 @@
 
 
 <script>
-
     $(window).on('load', function() {
-        $("#building").hide();
-        $("#battery").hide();
-        $("#column").hide();
-        $("#elevator").hide();
-
+        $("#building, #battery, #column, #elevator").hide();
     })
 
     function updateAjax(object){
@@ -68,6 +74,9 @@
                 _dictionary = {customer_id: customer};
                 _key = "buildings";
                 _objectId = "#buildings_id"
+
+                $("#building, #battery, #column, #elevator").hide();
+
                 break;
             case "building":
                 _url = "/find_batteries";
@@ -99,25 +108,48 @@
             success: function (response) {
                 console.log(response);
                 objectList  = response[_key];
+                showFields(object);
                 updateFields(_objectId);
             }
         })
     }
              
     function updateFields(_objectId) {      
-        $(_objectId).empty();
-        $(_objectId).append('<option selected="selected" disabled="disabled" value="Select">Select</option>');
+      if (_objectId == "#columns_id" || _objectId == "#elevators_id") {
+        $(_objectId).append('<option selected="None"  value="null">None</option>');
+      }
+      else {
+        $(_objectId).append('<option selected="selected" disabled="disabled" value="null">Select</option>');
+      }
 
         for(let i = 0; i < objectList.length; i++){
             $(_objectId).append("<option value=" + objectList[i] + ">" + objectList[i] + "</option>");
         }
     }
 
-    // function showFields(_objectId) {
-    //     if (_objectId == ("#customers_id")){
-    //         $("#buildings_id).show()
+    function showFields(object) {
+        if (object == ('customer')){
 
-    //     }
-    // }
+            $("#building").show();
+            $("#buildings_id, #batteries_id, #columns_id, #elevators_id").empty();
+            $("#battery, #column, #elevator").hide();
 
+        }else if (object == ('building')){
+
+            $("#building, #battery").show();
+            $("#batteries_id, #columns_id, #elevators_id").empty();
+            $("#column, #elevator").hide();
+            
+        }else if (object == ('battery')){
+
+            $("#building, #battery, #column").show();
+            $("#columns_id, #elevators_id").empty();
+            $("#elevator").hide();
+
+        }else if (object == ('column')){
+
+            $("#building, #battery, #column, #elevator").show();
+            $("#elevators_id").empty();
+        }
+    };
 </script>

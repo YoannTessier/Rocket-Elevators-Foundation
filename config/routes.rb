@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'find_batteries' => 'intervention#find_batteries'
   get 'find_columns' => 'intervention#find_columns'
   get 'find_elevators' => 'intervention#find_elevators'
+  post '/interventions', to: 'intervention#create_intervention'
   post '/leads', to: 'leads#create'  
   get 'dropbox/auth_callback' => 'dropbox#auth_callback'
 
