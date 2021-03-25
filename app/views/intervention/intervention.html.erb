@@ -12,7 +12,7 @@
             <%= form_with url:"/interventions", local: true do |f| %>
                 <div id="customer" class="col-md-4">
                     <%= f.label "Customer" %>
-                    <%= f.select :customer_id, getCustomers, {:include_blank => "-- Select --"}, :required => true, :onchange=>"updateAjax('customer');" %>
+                    <%= f.select :customer_id, getCustomers, {:include_blank => "-- Select --"}, :required => true, :onchange=>"updateAjax('customer');" %> <!-- CALLS AJAX FUNCTION WHEN SELECTION IS CHANGED -->
                 </div>
                 <div id="building" class="col-md-4">
                     <%= f.label "Building" %>
@@ -20,7 +20,7 @@
                 </div>
                 <div id="battery" class="col-md-4">
                     <%= f.label "Battery" %>
-                    <%= f.select :battery_id, Battery.all, {:include_blank => "-- Select --"}, :required => true, :onchange => "updateAjax('battery');" %>
+                    <%= f.select :battery_id, Battery.all, {:include_blank => "-- Select --"}, :required => true, :onchange => "updateAjax('battery');" %>  
                 </div>
                 <div id="column" class="col-md-4">
                     <%= f.label "Column" %>
@@ -49,10 +49,11 @@
 
 <script>
     $(window).on('load', function() {
-        $("#building, #battery, #column, #elevator").hide();
+        $("#building, #battery, #column, #elevator").hide();    //HIDES ALL FIELDS BUT CUSTOMER WHEN PAGE LOADS
     })
 
     function updateAjax(object){
+        // DEFINES VARIABLES FOR SWITCH STAEMENT
         let customerField = $("#customer_id");
         let customer = $("#customer_id").val();
         let buildingField = $("#building_id");
@@ -68,6 +69,7 @@
         let _key;
         let _objectId;
 
+        // INPUTS DIFFERENT VARIABLES IN AJAX FUNCTION DEPENDING ON FIELD SELECTION
         switch(object) {
             case "customer":
                 _url = "/find_buildings";
@@ -113,7 +115,7 @@
             }
         })
     }
-             
+    // GETS AND PRINTS SELECTIONS BASED ON PREVIOUS SELECTION  
     function updateFields(_objectId) {      
         if (_objectId == "#column_id" || _objectId == "#elevator_id") {
         $(_objectId).append('<option selected="None"  value>None</option>');
@@ -125,7 +127,7 @@
         if (_objectId == "#building_id"){
             
             for(let i = 0; i < objectList.length; i++){
-                $(_objectId).append("<option value=" + objectList[i][0] + ">" + objectList[i][1] + "</option>");
+                $(_objectId).append("<option value=" + objectList[i][0] + ">" + objectList[i][1] + "</option>"); //FILLS FIELD WITH objectList
             }
 
         }else{
@@ -135,12 +137,12 @@
             }
         }
     }
-
+    // SHOW NEXT FIELD DEPENDING ON PREVIOUS SELECTION
     function showFields(object) {
         if (object == ('customer')){
 
             $("#building").show();
-            $("#building_id, #battery_id, #column_id, #elevator_id").empty();
+            $("#building_id, #battery_id, #column_id, #elevator_id").empty();   //EMPTIES THOSE FIELDS IF USER CHANGES PREVIOUS SELECTION
             $("#battery, #column, #elevator").hide();
 
         }else if (object == ('building')){

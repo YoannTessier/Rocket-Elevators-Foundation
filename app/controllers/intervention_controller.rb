@@ -1,5 +1,6 @@
 class InterventionController < ApplicationController
 
+  # GETS COMPANY NAME AND ID + APPENDS IT IN @CUSTOMERS ARRAY
   def getCustomers
     @customers = []
     Customer.all.each do |c|
@@ -16,6 +17,7 @@ class InterventionController < ApplicationController
     return @employees
   end
 
+  # APPENDS BUILDING INFO TO @BUILDINGLIST DEPENDING ON CUSTOMER SELECTION
   def find_buildings
     @buildingList = []
     Building.where(customer_id: params[:customer_id]).each do |b|
@@ -48,6 +50,7 @@ class InterventionController < ApplicationController
     render json: {elevators: @elevatorList}
   end
 
+  # CREATES A NEW INSTANCE OF INTERVENTION AND PUTS IT IN TABLE
   def create_intervention
         
     interventions = Intervention.new
@@ -68,6 +71,7 @@ class InterventionController < ApplicationController
       end
   end
 
+  # CREATES A NEW ZENDESK TICKET
   def create_intervention_ticket()
     client = ZendeskAPI::Client.new do |config|
         config.url = ENV['ZENDESK_URL']
