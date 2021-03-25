@@ -62,9 +62,42 @@ class InterventionController < ApplicationController
 
     interventions.save!
 
-    redirect_to '/interventions'
+      if interventions.save
+        create_intervention_ticket()
+        redirect_to '/interventions'
+      end
+  end
+
+  def create_intervention_ticket()
+    client = ZendeskAPI::Client.new do |config|
+        config.url = ENV['ZENDESK_URL']
+        config.username = ENV['ZENDESK_USERNAME']
+        config.token = ENV['ZENDESK_TOKEN']
+    end
+    ZendeskAPI::Ticket.create!(client, 
+        :subject => "Intervention",
+        :comment => { 
+          :value => " 
+          Intervention Request: \n
+          - Requester: #{Employee.find_by(user_id: current_user.id).first_name} #{Employee.find_by(user_id: current_user.id).last_name}
+          - Customer: #{Customer.find(params[:customer_id]).company_name}
+          - Building ID: #{params[:building_id]} 
+          - Battery ID: #{params[:battery_id]}
+          - Column ID:  #{params[:column_id]} 
+          - Elevator ID: #{params[:elevator_id]}
+          - Assigned Employee: #{Employee.find(params[:employee_id]).first_name} #{Employee.find(params[:employee_id]).last_name}\n
+
+          Description: #{params[:description]}"
+          }, 
+        :requester => client.current_user.id,
+        :priority => "normal",
+        :type => "problem"
+      )
   end
 
   helper_method :getCustomers
   helper_method :getEmployees
 end
+
+
+   
