@@ -12,7 +12,7 @@ class InterventionController < ApplicationController
   def getEmployees
     @employees = []
     Employee.all.each do |e|
-      @employees.append([e.last_name, e.id])
+      @employees.append([e.first_name + ' ' + e.last_name, e.id])
     end
     return @employees
   end
