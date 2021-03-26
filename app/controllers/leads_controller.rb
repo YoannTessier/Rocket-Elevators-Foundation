@@ -73,7 +73,7 @@ class LeadsController < ApplicationController
             "projectName" => params[:project_name]
         })
         mail.add_personalization(custom)
-        mail.template_id = 'd-1ccc3d8ba35c4e9b879230de9bca725c'
+        mail.template_id = 'd-637aaa8f9f554201a35d50ebb3849ce3'
 
         honda_civic = SendGrid::API.new(api_key: ENV['SENDGRID_API'])
         begin
