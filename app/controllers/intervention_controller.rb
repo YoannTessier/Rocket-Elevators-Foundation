@@ -56,6 +56,7 @@ class InterventionController < ApplicationController
     @intervention = Intervention.new
   end
 
+  # CREATES A NEW INSTANCE OF INTERVENTION AND A ZENDESK TICKET
   def create
     @intervention = Intervention.new(intervention_params)
     @intervention.author = current_user.id
@@ -67,9 +68,9 @@ class InterventionController < ApplicationController
     @author = @intervention.author
 
     if (@intervention.elevator_id != nil && @intervention.elevator_id != " ")
-      @intervention.building_id, @intervention.battery_id, @intervention.column_id = nil
+      @intervention.building_id, @intervention.battery_id, @intervention.column_id = nil    # PUTS THESE FIELDS NULL IN THE DATABASE
     elsif (@intervention.column_id != nil && @intervention.column_id != " ")
-      @intervention.building_id, @intervention.battery_id, @intervention.elevator_id = nil
+      @intervention.building_id, @intervention.battery_id, @intervention.elevator_id = nil    
     elsif (@intervention.battery_id != nil && @intervention.battery_id != " ")
       @intervention.building_id, @intervention.column_id, @intervention.elevator_id = nil
     elsif (@intervention.building_id != nil && @intervention.building_id != " ")
@@ -83,6 +84,7 @@ class InterventionController < ApplicationController
         client.token = ENV['ZENDESK_TOKEN']
       end
 
+      # CREATES A NEW ZENDESK TICKET
       ZendeskAPI::Ticket.create!(client, 
         :subject => "Intervention",
         :comment => { 
@@ -105,11 +107,13 @@ class InterventionController < ApplicationController
         redirect_to '/interventions'
   end
 
+  # GIVES ACCESS TO THESE METHOS ANYWHERE
   helper_method :getCustomers
   helper_method :getEmployees
 
   private
 
+  # DEFINES PARAMS FOR INTERVENTION OBJECT
   def intervention_params
     params.permit(:author, :intervention_start, :intervention_end, :result, :status, :customer_id, :building_id, :battery_id, :column_id, :elevator_id, :report, :employee_id)
   end

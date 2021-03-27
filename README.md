@@ -1,4 +1,4 @@
-<img align="center" src="https://rocketelevators-yt.com/assets/RocketElevators_images/clear_logo.png"  alt="Logo" width="850" height="200">
+<img align="center" src="http://www.rocketelevators-yt.com/assets/logo-transparent-3c6296bf2343b849b947f8ccfce0de61dd34ba7f9e2a23a53d0a743bc4604e3c.png"  alt="Logo" width="850" height="200">
 
 
 # Rocket Elevators Information System #
@@ -173,8 +173,9 @@ Finally we tried to add **Weather** to *Google Maps* but this is as far as we go
 ![](2021-03-12-22-28-09.png)
 </details>
 
-
 # Extented Data Warehouse #
+<details>
+<summary><i>CLICK TO EXPAND</i></summary>
 
 <u><b>This week we had to extend our data warehouse with a table named Fact Intervention:</u></b>
 
@@ -185,6 +186,86 @@ Finally we tried to add **Weather** to *Google Maps* but this is as far as we go
 Then we developed a rake task to generate random data into that table.
 
 ![](fact_int2.jpg)
+</details>
+
+# Rocket Elevators Foundations #
+
+**Use these credentials to access the back office:**
+
+- Username: nicolas.genest@codeboxx.biz
+- Password: newdog1
+
+**Links to other Repos:**
+
+REST API: https://github.com/YoannTessier/Rocket-Elevators-Rest-API.git
+
+GraphQL API: https://github.com/YoannTessier/GraphQL_Deployment.git
+
+**Website URL:**
+
+http://www.rocketelevators-yt.com/
+
+**Zendesk URL:**
+
+https://rocketelevators5995.zendesk.com/
+
+**REST API Query Examples:**
+
+```
+https://rocket-elevators-yt.azurewebsites.net/api/interventions
+
+https://rocket-elevators-yt.azurewebsites.net/api/interventions/1/InProgress
+
+https://rocket-elevators-yt.azurewebsites.net/api/interventions/2/Completed
+```
+---------------------------------------------------------------------------------------------------------------
+
+Here is what I did this week: 
+
+Switched all existing APIs to my API keys + made sure all of them were functional.
+
+Created a new *Interventions Table* in *MySql Database*:
+
+![](2021-03-26-22-38-03.png)
+
+<br>
+
+Created a *Interventions Form* in a new tab on the website:
+
+![](2021-03-26-22-43-13.png)
+
+Here is some of the code for this:
+
+![](2021-03-26-22-43-56.png)
+![](2021-03-26-22-59-30.png)
+
+<br>
+
+When an *Intervention Form* is sent it also creates a *Zendesk Ticket:*
+
+![](2021-03-26-22-57-12.png)
+
+The code: 
+
+![](2021-03-26-22-58-06.png)
+
+
+<br>
+
+Added new *End Points* to the existing *REST API*:
+
+![](2021-03-26-22-46-17.png)
+
+So when we send a *Query*, here is what we get:
+
+![](2021-03-26-22-47-44.png)
+
+<br>
+
+Finally, I deployed my website on *Ubuntu Server* and the *REST API* on Azure. 
+
+
+
 
 
 
