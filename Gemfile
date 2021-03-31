@@ -49,6 +49,7 @@ gem 'devise'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
@@ -63,6 +64,7 @@ group :development do
   gem 'capistrano-bundler', '>= 1.1.0'
   gem 'rvm1-capistrano3', require: false
   gem 'capistrano3-puma'
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :test do
@@ -96,6 +98,7 @@ gem 'pg'
 
 # Multiverse
 gem 'multiverse'
+
 
 # Data Creation
 gem 'populator'

@@ -107,7 +107,7 @@ class InterventionController < ApplicationController
         redirect_to '/interventions'
   end
 
-  # GIVES ACCESS TO THESE METHOS ANYWHERE
+  # GIVES ACCESS TO THESE METHODS ANYWHERE
   helper_method :getCustomers
   helper_method :getEmployees
 
