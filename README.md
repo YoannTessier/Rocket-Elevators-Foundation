@@ -75,8 +75,7 @@ In order to link the two databases together and to keep them up to date, we had 
 ![](2021-02-26-17-55-30.png)
 
 </details>
-----------------------------------------------------------------------------------------------------------------
-</br>
+
 
 # Rocket Elevators APIs #
 
@@ -190,6 +189,9 @@ Then we developed a rake task to generate random data into that table.
 
 # Rocket Elevators Foundations #
 
+<details>
+<summary><i>CLICK TO EXPAND</i></summary>
+
 **Use these credentials to access the back office:**
 
 - Username: nicolas.genest@codeboxx.biz
@@ -264,15 +266,47 @@ So when we send a *Query*, here is what we get:
 
 Finally, I deployed my website on *Ubuntu Server* and the *REST API* on Azure. 
 
+</details>
+
+# Rocket Elevators Test-Driven Development #
+
+**Paths to different TDDs :**
+
+*ElevatorMedia:*
+
+- Method : lib/elevator_media.rb
+- Spec : spec/streamer_spec.rb
+
+*Others:*
+
+- InterventionController : spec/requests/intervention_spec.rb
+- PagesController : spec/requests/pages_controller_spec.rb
+- FindBuildings Method : spec/routing/find_buildings_spec.rb
 
 
+**Link to Bonus Repo:**
 
+TDD-JavaScript : https://github.com/YoannTessier/TDD-JavaScript.git
+<br>
 
+_____________________________________________________________________________________________________________
 
+Here are the methods I wrote for ElevatorMedia :
 
+![](2021-04-01-15-20-48.png)
 
+The Specs associated with it :
 
+![](2021-04-01-15-21-32.png)
+![](2021-04-01-15-21-54.png)
 
+<br>
+
+For the three others, I tested a *Controller*, a *Route* and a *View*:
+
+![](2021-04-01-15-24-02.png)
+![](2021-04-01-15-24-21.png)
+![](2021-04-01-15-24-39.png)
 
 
 
