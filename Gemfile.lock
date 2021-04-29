@@ -66,6 +66,7 @@ GEM
     autoprefixer-rails (10.2.4.0)
       execjs
     bcrypt (3.1.16)
+    bcrypt_pbkdf (1.1.0)
     bindex (0.8.1)
     blazer (2.4.2)
       activerecord (>= 5)
@@ -141,6 +142,7 @@ GEM
     dropbox_api (0.1.19)
       faraday (~> 1.0)
       oauth2 (~> 1.1)
+    ed25519 (1.2.4)
     errbase (0.2.1)
     erubi (1.10.0)
     eventmachine (1.2.7)
@@ -429,6 +431,7 @@ PLATFORMS
 
 DEPENDENCIES
   activestorage-dropbox
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   blazer
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.0.0)
@@ -447,6 +450,7 @@ DEPENDENCIES
   csv
   devise
   dropbox_api
+  ed25519 (>= 1.2, < 2.0)
   faker!
   figaro
   font-awesome-rails
